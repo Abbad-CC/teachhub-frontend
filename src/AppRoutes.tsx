@@ -1,4 +1,3 @@
-import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import LandingPage from './pages/LandingPage'
@@ -8,8 +7,10 @@ import TeacherDashboard from './pages/TeacherDashboard'
 import AdminDashboard from './pages/AdminDashboard'
 
 const AppRoutes = () => {
-  const { isAuthenticated, userType } = useSelector((state: any) => state.auth)
-
+  const { isAuthenticated, user } = useSelector((state: any) => state.auth)
+  if(user && isAuthenticated){
+      console.log("this is user and isAuthenticated:", user, isAuthenticated, user.role)
+  }
   if (!isAuthenticated) {
     return (
       <Routes>
@@ -22,10 +23,10 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      {userType === 'student' && <Route path="/dashboard" element={<StudentDashboard />} />}
-      {userType === 'teacher' && <Route path="/dashboard" element={<TeacherDashboard />} />}
-      {userType === 'admin' && <Route path="/dashboard" element={<AdminDashboard />} />}
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      {user.role === 'student' ? <Route path="/student-dashboard" element={<StudentDashboard />} /> :<Route path="/auth" element={<Authentication />} />}
+      {user.role === 'teacher' ? <Route path="/teacher-dashboard" element={<TeacherDashboard />} />:<Route path="/auth" element={<Authentication />} />}
+      {user.role === 'admin' ? <Route path="/admin-dashboard" element={<AdminDashboard />} />:<Route path="/auth" element={<Authentication />} />}
+      <Route path="*" element={<Navigate to="/no-usertype-found-dashboard" />} />
     </Routes>
   )
 }

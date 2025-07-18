@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src="/logo.png" 
+              src="/teachHUb.png" 
               alt="TeachHub Logo" 
               className="h-8 w-8 rounded-md mr-3"
               onError={(e) => {

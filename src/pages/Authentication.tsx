@@ -21,9 +21,15 @@ const Authentication: React.FC = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    }
+    if (isAuthenticated && userType === 'student') {
+      navigate('/student-dashboard');
+    } 
+    if(isAuthenticated && userType === 'admin') {
+      navigate('/admin-dashboard');
+    } 
+    if(isAuthenticated && userType === 'teacher') {
+      navigate('/teacher-dashboard');
+    } 
   }, [isAuthenticated, navigate]);
 
   // Clear error when component unmounts or form changes
