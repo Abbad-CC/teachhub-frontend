@@ -43,7 +43,7 @@ const AppRoutes = () => {
       {user.role === 'teacher' ? <Route path="/teacher-dashboard" 
       element={
       <Layout>
-        <AvailableCourseDetail />
+        <TeacherDashboard />
       </Layout>} /> : 
       <Route path="/auth" 
       element={
@@ -53,7 +53,7 @@ const AppRoutes = () => {
       {user.role === 'admin' ? <Route path="/admin-dashboard" 
       element={
       <Layout>
-        <AvailableCourseDetail />
+        <AdminDashboard />
       </Layout>} /> : 
       <Route path="/auth" 
       element={
