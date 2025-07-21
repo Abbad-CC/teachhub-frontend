@@ -10,6 +10,8 @@ import Layout from './components/Layout'
 import NoUserTypeFound from './components/NoUserType'
 import EnrolledCourseDetail from './pages/EnrolledCourseDetail'
 import AvailableCourseDetail from './pages/AvailableCourseDetail'
+import CourseDetails from './pages/PublishedCourseDetails'
+import UnpublishedCourseDetails from './pages/UnpublishedCourseDetails'
 
 
 
@@ -40,27 +42,7 @@ const AppRoutes = () => {
         <Authentication />} 
         />}
 
-      {user.role === 'teacher' ? <Route path="/teacher-dashboard" 
-      element={
-      <Layout>
-        <TeacherDashboard />
-      </Layout>} /> : 
-      <Route path="/auth" 
-      element={
-      <Authentication />} 
-      />}
-
-      {user.role === 'admin' ? <Route path="/admin-dashboard" 
-      element={
-      <Layout>
-        <AdminDashboard />
-      </Layout>} /> : 
-      <Route path="/auth" 
-      element={
-      <Authentication />} 
-      />}
-
-      {user.role === 'student' ? 
+        {user.role === 'student' ? 
         <Route path="/available-course-detail" 
         element={
           <Layout>
@@ -83,6 +65,48 @@ const AppRoutes = () => {
       <Authentication />} 
       />}
 
+
+      {user.role === 'teacher' ? <Route path="/teacher-dashboard" 
+      element={
+      <Layout>
+        <TeacherDashboard />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      {user.role === 'teacher' ? <Route path="/course-details" 
+      element={
+      <Layout>
+        <CourseDetails />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+            {user.role === 'teacher' ? <Route path="/unpublished-course-details" 
+      element={
+      <Layout>
+        <UnpublishedCourseDetails />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      {user.role === 'admin' ? <Route path="/admin-dashboard" 
+      element={
+      <Layout>
+        <AdminDashboard />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      
       <Route path="/no-usertype-found-dashboard" element={<NoUserTypeFound />} />
     </Routes>
   )
