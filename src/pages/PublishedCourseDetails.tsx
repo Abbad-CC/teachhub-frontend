@@ -52,7 +52,7 @@ const CourseDetails: React.FC = () => {
   useEffect(() => {
     const fetchBroadcasts = async () => {
       if (!token || !course?.id) return;
-
+      setLoading(true)
       try {
         const response = await fetch(`http://localhost:5000/api/courses/announcement/get/${course.id}`, {
           method: 'GET',
@@ -69,6 +69,8 @@ const CourseDetails: React.FC = () => {
         }
       } catch (err) {
         toast.error('Something went wrong while fetching announcements');
+      } finally{
+        setLoading(false)
       }
     };
 
@@ -133,6 +135,10 @@ const CourseDetails: React.FC = () => {
   };
 
   if (!course) return <p className="p-6">No course data found.</p>;
+
+  if (loading) return  <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
 
   return (
     <div className="md:flex lg:flex mx-auto p-6 bg-white rounded shadow gap-6 sm:block relative">
