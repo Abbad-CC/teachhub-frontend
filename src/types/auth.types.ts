@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: 'student' | 'teacher' | 'admin';
@@ -38,7 +38,7 @@ export interface AdminLoginCredentials {
 export interface AdminAuthResponse {
   token: string;
   admin: {
-    id: number;
+    id: string;
     name: string;
     email: string;
   };

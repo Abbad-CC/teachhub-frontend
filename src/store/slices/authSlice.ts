@@ -15,13 +15,13 @@ const decodeToken = (token: string): User | null => {
     try {
         const decoded = jwtDecode<any>(token);
 
-        console.log("this is the decoded token", decoded)
+        console.log("this is the decoded token and type of userID", decoded, typeof decoded.userId)
         return {
             id: decoded.userId,
             name: decoded.userName || '',
             email: decoded.email || '',
             role: decoded.role,
-        };
+        }
     } catch (error) {
         console.error('Error decoding token:', error);
         return null;
@@ -83,7 +83,7 @@ const authSlice = createSlice({
             state.error = null;
         }
         ,
-        adminLoginSuccess: (state, action: PayloadAction<{ token: string; admin: { id: number; name: string; email: string } }>) => {
+        adminLoginSuccess: (state, action: PayloadAction<{ token: string; admin: { id: string; name: string; email: string } }>) => {
             state.isLoading = false;
             state.isAuthenticated = true;
             state.token = action.payload.token;
