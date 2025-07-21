@@ -8,12 +8,16 @@ import TeacherDashboard from './pages/TeacherDashboard'
 import AdminDashboard from './pages/AdminDashboard'
 import Layout from './components/Layout'
 import NoUserTypeFound from './components/NoUserType'
+import EnrolledCourseDetail from './pages/EnrolledCourseDetail'
+import AvailableCourseDetail from './pages/AvailableCourseDetail'
 
 
 
 const AppRoutes = () => {
   const { isAuthenticated, user } = useSelector((state: any) => state.auth)
-
+  if (user && isAuthenticated) {
+    console.log("this is user and isAuthenticated:", user, isAuthenticated, user.role)
+  }
   if (!isAuthenticated) {
     return (
       <Routes>
@@ -26,36 +30,59 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      {user.role === 'student' && (
-        <Route
-          path="/student-dashboard"
-          element={
-            <Layout>
-              <StudentDashboard />
-            </Layout>
-          }
-        />
-      )}
-      {user.role === 'teacher' && (
-        <Route
-          path="/teacher-dashboard"
-          element={
-            <Layout>
-              <TeacherDashboard />
-            </Layout>
-          }
-        />
-      )}
-      {user.role === 'admin' && (
-        <Route
-          path="/admin-dashboard"
-          element={
-            <Layout>
-              <AdminDashboard />
-            </Layout>
-          }
-        />
-      )}
+      {user.role === 'student' ? <Route path="/student-dashboard" 
+      element={
+      <Layout>
+        <StudentDashboard />
+        </Layout>} /> 
+        : <Route path="/auth" 
+        element={
+        <Authentication />} 
+        />}
+
+      {user.role === 'teacher' ? <Route path="/teacher-dashboard" 
+      element={
+      <Layout>
+        <AvailableCourseDetail />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      {user.role === 'admin' ? <Route path="/admin-dashboard" 
+      element={
+      <Layout>
+        <AvailableCourseDetail />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      {user.role === 'student' ? 
+        <Route path="/available-course-detail" 
+        element={
+          <Layout>
+            <AvailableCourseDetail />
+          </Layout>
+        } />:
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+      {user.role === 'student' ? 
+        <Route path="/course-detail" element={
+          <Layout>
+            <EnrolledCourseDetail />
+          </Layout>
+        } /> :
+       <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
       <Route path="/no-usertype-found-dashboard" element={<NoUserTypeFound />} />
     </Routes>
   )

@@ -9,7 +9,7 @@
 //   return (
 //     <div className="min-h-screen bg-gray-50">
 //       <Navbar />
-      
+
 //       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
 //         {/* Header */}
 //         <div className="px-4 py-6 sm:px-0">
@@ -171,6 +171,8 @@ import { toast } from 'react-toastify';
 import type { RootState } from '../store';
 import Navbar from '../components/Navbar';
 // import { API_BASE_URL } from '../store/sagas/authSagas';
+import { useNavigate } from 'react-router-dom';
+
 
 interface Course {
   id: string;
@@ -203,6 +205,8 @@ const StudentDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'available' | 'enrolled'>('available');
 
   const { user, token } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetchCourses();
@@ -319,192 +323,181 @@ const StudentDashboard: React.FC = () => {
 
   return (
     <>
-    {/* <div className='mx-auto'>
+      {/* <div className='mx-auto'>
       <Navbar/>
       </div>     */}
       <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Welcome back, {user?.name}!
-        </h1>
-        <p className="text-gray-600">Explore courses and manage your learning journey</p>
-      </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Welcome back, {user?.name}!
+          </h1>
+          <p className="text-gray-600">Explore courses and manage your learning journey</p>
+        </div>
 
-      {/* Tab Navigation */}
-      <div className="mb-6">
-        <nav className="flex space-x-8">
-          <button
-            onClick={() => setActiveTab('available')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'available'
+        {/* Tab Navigation */}
+        <div className="mb-6">
+          <nav className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab('available')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'available'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-          >
-            Available Courses ({availableCourses.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('enrolled')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'enrolled'
-              ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            My Courses ({enrolledCourses.length})
-          </button>
-        </nav>
-      </div>
+                }`}
+            >
+              Available Courses ({availableCourses.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('enrolled')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'enrolled'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+            >
+              My Courses ({enrolledCourses.length})
+            </button>
+          </nav>
+        </div>
 
-      {/* Course Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-        {activeTab === 'available' &&
-          availableCourses.map((course) => (
-            <div key={course.id} className="bg-white rounded-lg border-1  border-gray-300 shadow-lg overflow-hidden">
-              {/* {course.demoVideoUrl && (
-                <div className="aspect-video bg-gray-100">
-                  <video
-                    src={course.demoVideoUrl}
-                    className="w-full h-full object-cover"
-                    controls
-                    />
-                </div>
-              )} */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {course.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {course.description}
-                </p>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-bold text-green-600">
-                    ${course.price}
+        {/* Course Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+          {activeTab === 'available' &&
+            availableCourses.map((course) => (
+              <div key={course.id} className="relative bg-white rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+
+                {/* Already Enrolled Tag */}
+                {isEnrolled(course.id) && (
+                  <span className="absolute top-3 right-3 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                    Already Enrolled
                   </span>
-                  <span className="text-sm text-gray-500">
-                    {course.studentCount || 0} students
-                  </span>
-                </div>
-                <div className="mb-4">
-                  <p className="text-sm text-gray-500">
-                    Instructor: {course.teacher.name}
+                )}
+
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {course.description}
                   </p>
-                </div>
-                <button
-                  onClick={() => handleEnroll(course.id)}
-                  disabled={isEnrolled(course.id) || enrollingCourseId === course.id}
-                  className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
-                    isEnrolled(course.id)
-                    ? 'bg-green-100 text-green-800 cursor-not-allowed'
-                    : enrollingCourseId === course.id
-                    ? 'bg-blue-400 text-white cursor-not-allowed'
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                  }`}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl font-bold text-green-600">${course.price}</span>
+                    <span className="text-sm text-gray-500 px-2 py-1">
+                      {course.studentCount || 0} students
+                    </span>
+                  </div>
+                  <div className="mb-4 text-sm text-gray-500">
+                    Instructor: {course.teacher.name}
+                  </div>
+
+                  {/* <button
+                    onClick={() => handleEnroll(course.id)}
+                    disabled={isEnrolled(course.id) || enrollingCourseId === course.id}
+                    className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${isEnrolled(course.id)
+                        ? 'bg-green-100 text-green-800 cursor-not-allowed'
+                        : enrollingCourseId === course.id
+                          ? 'bg-blue-400 text-white cursor-not-allowed'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
+                      }`}
                   >
-                  {enrollingCourseId === course.id ? (
-                    <div className="flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Enrolling...
-                    </div>
-                  ) : isEnrolled(course.id) ? (
-                    'Already Enrolled'
-                  ) : (
-                    'Enroll Now'
-                  )}
-                </button>
-              </div>
-            </div>
-          ))}
-
-        {activeTab === 'enrolled' &&
-          enrolledCourses.map((course) => (
-            <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              {/* {course.demoVideoUrl && (
-                <div className="aspect-video bg-gray-100">
-                  <video
-                    src={course.demoVideoUrl}
-                    className="w-full h-full object-cover"
-                    controls
-                    />
-                </div>
-              )} */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {course.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {course.description}
-                </p>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-bold text-green-600">
-                    ${course.price}
-                  </span>
-                  <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
-                    Enrolled
-                  </span>
-                </div>
-                <div className="mb-4">
-                  <p className="text-sm text-gray-500">
-                    Instructor: {course.teacher.name}
-                  </p>
-                </div>
-                <div className="flex space-x-2">
-                  <button className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
-                    Continue Learning
-                  </button>
-                  <button
-                    onClick={() => handleUnenroll(course.id)}
-                    disabled={unenrollingCourseId === course.id}
-                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                      unenrollingCourseId === course.id
-                      ? 'bg-red-400 text-white cursor-not-allowed'
-                      : 'bg-red-600 text-white hover:bg-red-700'
-                    }`}
-                    >
-                    {unenrollingCourseId === course.id ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    {enrollingCourseId === course.id ? (
+                      <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Enrolling...
+                      </div>
+                    ) : isEnrolled(course.id) ? (
+                      'Already Enrolled'
                     ) : (
-                      'Unenroll'
+                      'Enroll Now'
                     )}
+                  </button> */}
+
+                  <button
+                    onClick={() => navigate('/available-course-detail', { state: { course, isEnrolled: isEnrolled(course.id) } })}
+                    className="w-full mt-2 py-2 px-4 rounded-md bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
+                  >
+                    View Details
                   </button>
                 </div>
               </div>
+            ))}
+
+
+          {activeTab === 'enrolled' &&
+            enrolledCourses.map((course) => (
+              <div key={course.id} className="relative bg-white rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+
+                {/* Unenroll Tag */}
+                {/* <button
+                  onClick={() => handleUnenroll(course.id)}
+                  disabled={unenrollingCourseId === course.id}
+                  className={`absolute top-3 right-3 text-xs px-2 py-1 rounded-full transition-colors ${unenrollingCourseId === course.id
+                      ? 'bg-red-200 text-red-600 cursor-not-allowed'
+                      : 'bg-red-100 text-red-700 hover:bg-red-200'
+                    }`}
+                >
+                  {unenrollingCourseId === course.id ? 'Unenrolling...' : 'Unenroll'}
+                </button> */}
+
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {course.description}
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl font-bold text-green-600">${course.price}</span>
+                    <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                      Enrolled
+                    </span>
+                  </div>
+                  <div className="mb-4 text-sm text-gray-500">
+                    Instructor: {course.teacher.name}
+                  </div>
+
+                  <button
+                    onClick={() => navigate('/course-detail', { state: { course } })}
+                    className="w-full bg-cyan-600 text-white py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            ))}
+
+        </div>
+
+        {/* Empty States */}
+        {activeTab === 'available' && availableCourses.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
             </div>
-          ))}
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No courses available</h3>
+            <p className="text-gray-500">Check back later for new courses!</p>
+          </div>
+        )}
+
+        {activeTab === 'enrolled' && enrolledCourses.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No enrolled courses</h3>
+            <p className="text-gray-500">Start learning by enrolling in a course!</p>
+            <button
+              onClick={() => setActiveTab('available')}
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Browse Available Courses
+            </button>
+          </div>
+        )}
       </div>
-
-      {/* Empty States */}
-      {activeTab === 'available' && availableCourses.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No courses available</h3>
-          <p className="text-gray-500">Check back later for new courses!</p>
-        </div>
-      )}
-
-      {activeTab === 'enrolled' && enrolledCourses.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No enrolled courses</h3>
-          <p className="text-gray-500">Start learning by enrolling in a course!</p>
-          <button
-            onClick={() => setActiveTab('available')}
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Browse Available Courses
-          </button>
-        </div>
-      )}
-    </div>
-      </>
+    </>
   );
 };
 
