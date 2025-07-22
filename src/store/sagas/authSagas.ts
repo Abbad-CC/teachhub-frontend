@@ -30,7 +30,7 @@ const signupAPI = (credentials: SignupCredentials): Promise<AxiosResponse<AuthRe
   axios.post(`${API_BASE_URL}/auth/signup`, credentials);
 
 const adminLoginAPI = (credentials: AdminLoginCredentials): Promise<AxiosResponse<AdminAuthResponse>> =>
-  axios.post(`${API_BASE_URL}/auth/admin/login`, credentials);
+  axios.post(`${API_BASE_URL}/admin/login`, credentials);
 
 // Saga functions
 function* loginSaga(action: PayloadAction<LoginCredentials>) {

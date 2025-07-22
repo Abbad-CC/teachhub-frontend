@@ -12,6 +12,8 @@ import EnrolledCourseDetail from './pages/EnrolledCourseDetail'
 import AvailableCourseDetail from './pages/AvailableCourseDetail'
 import CourseDetails from './pages/PublishedCourseDetails'
 import UnpublishedCourseDetails from './pages/UnpublishedCourseDetails'
+import AddCourse from './pages/AddCourse'
+import EditCourse from './pages/EditCourses'
 
 
 
@@ -32,6 +34,17 @@ const AppRoutes = () => {
 
   return (
     <Routes>
+       {user.role === 'admin' ? <Route path="/admin-dashboard" 
+      element={
+      <Layout>
+        <AdminDashboard />
+        </Layout>} /> 
+        : <Route path="/auth" 
+        element={
+        <Authentication />} 
+        />}
+
+
       {user.role === 'student' ? <Route path="/student-dashboard" 
       element={
       <Layout>
@@ -90,6 +103,27 @@ const AppRoutes = () => {
       element={
       <Layout>
         <UnpublishedCourseDetails />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+        {user.role === 'teacher' ? <Route path="/add-course" 
+      element={
+      <Layout>
+        <AddCourse />
+      </Layout>} /> : 
+      <Route path="/auth" 
+      element={
+      <Authentication />} 
+      />}
+
+
+       {user.role === 'teacher' ? <Route path="/edit-course" 
+      element={
+      <Layout>
+        <EditCourse />
       </Layout>} /> : 
       <Route path="/auth" 
       element={

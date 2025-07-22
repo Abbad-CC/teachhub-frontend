@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import type { RootState } from '../store';
+import { Trash, Edit } from 'lucide-react';
+
 
 interface Student {
   id: string;
@@ -43,10 +45,12 @@ const CourseDetails: React.FC = () => {
   const course = state?.course;
   const { token } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
+  const [unpublishLoading, setUnpublishLoading] = useState(false);
   const [broadcasts, setBroadcasts] = useState<Broadcast[]>([]);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [sendingBroadcast, setSendingBroadcast] = useState(false);
+    const [isUnPublished, setIsUnPublished] = useState (false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,14 +129,40 @@ const CourseDetails: React.FC = () => {
     }
   };
 
+
+   const handleUnPublishCourse = async () => {
+      if (!token || !course?.id) return;
+      setUnpublishLoading(true);
+      try {
+        const response = await fetch(`http://localhost:5000/api/courses/${course.id}/unpublish`, {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const data = await response.json();
+        if (response.ok) {
+          toast.success('Course Unpublished successfully');
+          setIsUnPublished(true);
+          setTimeout(() => {
+            navigate('/teacher-dashboard');
+          }, 2500);
+        } else {
+          toast.error(data.error || 'Failed to unpublish course');
+        }
+      } catch (error) {
+        toast.error('Error Unpublishing course');
+      } finally {
+        setUnpublishLoading(false);
+      }
+    };
+
   const handleEditCourse = () => {
     navigate('/edit-course', { state: { course } });
   };
 
-  const handleDeleteCourse = () => {
-    // You can implement delete functionality here
-    toast.info('Delete course functionality to be implemented');
-  };
+ 
 
   if (!course) return <p className="p-6">No course data found.</p>;
 
@@ -146,24 +176,25 @@ const CourseDetails: React.FC = () => {
 
       <div className="w-2/3">
         <div className='flex justify-between'>
-          <h1 className="text-2xl font-bold ">{course.title}</h1>
+          <h1 className="text-2xl mt-1.5 font-bold ">{course.title}</h1>
 
           <div className="flex flex-row-reverse gap-2">
             <button
               onClick={handleEditCourse}
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm"
             >
-              Edit Course
+              <Edit/>
             </button>
-            <button
-              onClick={handleDeleteCourse}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition font-medium text-sm"
+           
+             <button
+              onClick={handleUnPublishCourse}
+              className={`px-4 py-2  ${isUnPublished ? " bg-white border-2 border-gray-700 disabled: text-black shadow-2xl " : "bg-black text-white hover:bg-gray-700 transition"} rounded  font-medium text-sm `}
             >
-              Delete Course
+              {unpublishLoading ? "Loading" : isUnPublished ? "Redirecting... " : "Unpublish"}
             </button>
           </div>
         </div>
-        <p className="text-gray-700 mb-4">{course.description}</p>
+        <p className="text-gray-700 mt-7 mb-4">{course.description}</p>
 
         <video src={course.demoVideoUrl} controls className="w-full mb-4 rounded" />
 
