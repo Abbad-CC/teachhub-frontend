@@ -5,17 +5,17 @@ import { toast } from 'react-toastify';
 import type { RootState } from '../store';
 import { Upload, Link, ArrowLeft } from 'lucide-react';
 
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  demoVideoUrl: string;
-  published: boolean;
-  teacherId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// interface Course {
+//   id: string;
+//   title: string;
+//   description: string;
+//   price: number;
+//   demoVideoUrl: string;
+//   published: boolean;
+//   teacherId: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 const AddCourse: React.FC = () => {
   const { token } = useSelector((state: RootState) => state.auth);

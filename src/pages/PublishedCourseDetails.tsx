@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import type { RootState } from '../store';
-import { Trash, Edit } from 'lucide-react';
+import {  Edit } from 'lucide-react';
 
 
 interface Student {
@@ -20,18 +20,18 @@ interface Enrollment {
   student: Student;
 }
 
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  demoVideoUrl: string;
-  published: boolean;
-  teacherId: string;
-  createdAt: string;
-  updatedAt: string;
-  enrollments: Enrollment[];
-}
+// interface Course {
+//   id: string;
+//   title: string;
+//   description: string;
+//   price: number;
+//   demoVideoUrl: string;
+//   published: boolean;
+//   teacherId: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   enrollments: Enrollment[];
+// }
 
 type Broadcast = {
   id: number;

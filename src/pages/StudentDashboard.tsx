@@ -169,7 +169,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import type { RootState } from '../store';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 // import { API_BASE_URL } from '../store/sagas/authSagas';
 import { useNavigate } from 'react-router-dom';
 
@@ -189,19 +189,19 @@ interface Course {
   studentCount?: number;
 }
 
-interface Enrollment {
-  id: string;
-  courseId: string;
-  studentId: string;
-  enrolledAt: string;
-}
+// interface Enrollment {
+//   id: string;
+//   courseId: string;
+//   studentId: string;
+//   enrolledAt: string;
+// }
 
 const StudentDashboard: React.FC = () => {
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
   const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
-  const [enrollingCourseId, setEnrollingCourseId] = useState<string | null>(null);
-  const [unenrollingCourseId, setUnenrollingCourseId] = useState<string | null>(null);
+  // const [enrollingCourseId, setEnrollingCourseId] = useState<string | null>(null);
+  // const [unenrollingCourseId, setUnenrollingCourseId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'available' | 'enrolled'>('available');
 
   const { user, token } = useSelector((state: RootState) => state.auth);
@@ -243,71 +243,71 @@ const StudentDashboard: React.FC = () => {
     }
   };
 
-  const handleEnroll = async (courseId: string) => {
-    if (!token) {
-      toast.error('Please login to enroll');
-      return;
-    }
+  // const handleEnroll = async (courseId: string) => {
+  //   if (!token) {
+  //     toast.error('Please login to enroll');
+  //     return;
+  //   }
 
-    setEnrollingCourseId(courseId);
-    try {
-      const response = await fetch(`http://localhost:5000/api/enrollments/${courseId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+  //   setEnrollingCourseId(courseId);
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/api/enrollments/${courseId}`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok) {
-        toast.success('Successfully enrolled in course!');
-        // Refresh courses to update enrollment status
-        fetchCourses();
-      } else {
-        toast.error(data.error || 'Failed to enroll in course');
-      }
-    } catch (error) {
-      console.error('Error enrolling:', error);
-      toast.error('Failed to enroll in course');
-    } finally {
-      setEnrollingCourseId(null);
-    }
-  };
+  //     if (response.ok) {
+  //       toast.success('Successfully enrolled in course!');
+  //       // Refresh courses to update enrollment status
+  //       fetchCourses();
+  //     } else {
+  //       toast.error(data.error || 'Failed to enroll in course');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error enrolling:', error);
+  //     toast.error('Failed to enroll in course');
+  //   } finally {
+  //     setEnrollingCourseId(null);
+  //   }
+  // };
 
-  const handleUnenroll = async (courseId: string) => {
-    if (!token) {
-      toast.error('Please login to unenroll');
-      return;
-    }
+  // const handleUnenroll = async (courseId: string) => {
+  //   if (!token) {
+  //     toast.error('Please login to unenroll');
+  //     return;
+  //   }
 
-    setUnenrollingCourseId(courseId);
-    try {
-      const response = await fetch(`http://localhost:5000/api/enrollments/${courseId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+  //   setUnenrollingCourseId(courseId);
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/api/enrollments/${courseId}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok) {
-        toast.success('Successfully unenrolled from course!');
-        // Refresh courses to update enrollment status
-        fetchCourses();
-      } else {
-        toast.error(data.error || 'Failed to unenroll from course');
-      }
-    } catch (error) {
-      console.error('Error unenrolling:', error);
-      toast.error('Failed to unenroll from course');
-    } finally {
-      setUnenrollingCourseId(null);
-    }
-  };
+  //     if (response.ok) {
+  //       toast.success('Successfully unenrolled from course!');
+  //       // Refresh courses to update enrollment status
+  //       fetchCourses();
+  //     } else {
+  //       toast.error(data.error || 'Failed to unenroll from course');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error unenrolling:', error);
+  //     toast.error('Failed to unenroll from course');
+  //   } finally {
+  //     setUnenrollingCourseId(null);
+  //   }
+  // };
 
   const isEnrolled = (courseId: string) => {
     return enrolledCourses.some(course => course.id === courseId);
