@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, User, DollarSign, Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
+import { BookOpen, User,  Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
 import type { RootState } from '../store';
 
 interface Teacher {
