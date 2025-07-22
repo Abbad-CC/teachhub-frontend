@@ -82,7 +82,7 @@ const AvailableCourseDetail = () => {
       <h1 className="text-2xl font-bold mb-4">{course.title}</h1>
       <p className="text-gray-700 mb-4">{course.description}</p>
       <div className="text-sm text-gray-600 mb-2">Instructor: {course.teacher?.name}</div>
-      <div className="text-green-700 font-semibold mb-2">Price: ${course.price}</div>
+      <div className="text-green-700 font-semibold mb-2">Price: Rs {course.price}</div>
       <p className="text-sm text-gray-500 mb-4">Students Enrolled: {course.studentCount}</p>
 
       <button

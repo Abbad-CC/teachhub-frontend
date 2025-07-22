@@ -379,7 +379,7 @@ const StudentDashboard: React.FC = () => {
                     {course.description}
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-green-600">${course.price}</span>
+                    <span className="text-2xl font-bold text-green-600">Rs {course.price}</span>
                     <span className="text-sm text-gray-500 px-2 py-1">
                       {course.studentCount || 0} students
                     </span>
@@ -445,7 +445,7 @@ const StudentDashboard: React.FC = () => {
                     {course.description}
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-green-600">${course.price}</span>
+                    <span className="text-2xl font-bold text-green-600">Rs {course.price}</span>
                     <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
                       Enrolled
                     </span>

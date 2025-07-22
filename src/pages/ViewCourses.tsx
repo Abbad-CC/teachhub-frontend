@@ -225,7 +225,7 @@ const ViewCourses: React.FC = () => {
                 </div>
                 
                 <div className="flex items-center text-sm text-gray-600">
-                  <DollarSign className="h-4 w-4 mr-2" />
+                  
                   <span className="font-semibold text-purple-600">{formatPrice(course.price)}</span>
                 </div>
                 

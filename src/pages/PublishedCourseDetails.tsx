@@ -205,7 +205,7 @@ const CourseDetails: React.FC = () => {
             <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Draft</span>
           )}
         </div>
-        <div className="text-green-700 font-semibold mb-2">Price: ${course.price}</div>
+        <div className="text-green-700 font-semibold mb-2">Price: Rs {course.price}</div>
         <div className="text-sm text-gray-600 mb-4">
           Students Enrolled: {course.enrollments?.length || 0}
         </div>

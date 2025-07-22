@@ -112,7 +112,7 @@ const EnrolledCourseDetail = () => {
             <video src={course.demoVideoUrl} controls className="w-full mb-4 rounded" />
 
             <div className="text-sm text-gray-600 mb-2">Instructor: {course.teacher?.name}</div>
-            <div className="text-green-700 font-semibold mb-2">Price: ${course.price}</div>
+            <div className="text-green-700 font-semibold mb-2">Price: Rs {course.price}</div>
         </div>
 
         {/* Right: Announcements */}
