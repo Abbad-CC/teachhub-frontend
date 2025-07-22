@@ -6,6 +6,7 @@ import { Users, BookOpen, GraduationCap, ChevronRight } from 'lucide-react';
 import type { RootState } from '../store';
 
 interface User {
+  isActive: unknown;
   id: string;
   name: string;
   email: string;
@@ -194,7 +195,7 @@ const AdminDashboard: React.FC = () => {
                         <span className="text-3xl font-bold text-green-600">
                           {teachers.length}
                         </span>
-                        <span className="text-gray-500 ml-2">active teachers</span>
+                        <span className="text-gray-500 ml-2">Teachers</span>
                       </div>
                     </div>
                   </div>
@@ -225,7 +226,7 @@ const AdminDashboard: React.FC = () => {
                         <span className="text-3xl font-bold text-purple-600">
                           {courses.length}
                         </span>
-                        <span className="text-gray-500 ml-2">total courses</span>
+                        <span className="text-gray-500 ml-2">Total courses</span>
                       </div>
                     </div>
                   </div>
@@ -253,7 +254,7 @@ const AdminDashboard: React.FC = () => {
             <div className="mt-4 bg-blue-100 rounded-lg p-4">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Active learners</span>
-                <span className="font-medium text-gray-900">{students.length}</span>
+                <span className="font-medium text-gray-900">{students.filter(student => student.isActive).length}</span>
               </div>
             </div>
           </div>
@@ -266,7 +267,7 @@ const AdminDashboard: React.FC = () => {
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-green-600 mb-2">
-                {teachers.length}
+                {teachers.filter(teacher => teacher.isActive).length}
               </div>
               <p className="text-gray-500 text-sm">Active teachers on platform</p>
             </div>
