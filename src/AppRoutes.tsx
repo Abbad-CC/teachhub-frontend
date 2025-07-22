@@ -14,6 +14,9 @@ import CourseDetails from './pages/PublishedCourseDetails'
 import UnpublishedCourseDetails from './pages/UnpublishedCourseDetails'
 import AddCourse from './pages/AddCourse'
 import EditCourse from './pages/EditCourses'
+import ViewStudents from './pages/ViewStudents'
+import ViewTeachers from './pages/ViewTeachers'
+import ViewCourses from './pages/ViewCourses'
 
 
 
@@ -38,6 +41,35 @@ const AppRoutes = () => {
       element={
       <Layout>
         <AdminDashboard />
+        </Layout>} /> 
+        : <Route path="/auth" 
+        element={
+        <Authentication />} 
+        />}
+        {user.role === 'admin' ? <Route path="/view-students" 
+      element={
+      <Layout>
+        <ViewStudents />
+        </Layout>} /> 
+        : <Route path="/auth" 
+        element={
+        <Authentication />} 
+        />}
+      
+        {user.role === 'admin' ? <Route path="/view-teachers" 
+      element={
+      <Layout>
+        <ViewTeachers />
+        </Layout>} /> 
+        : <Route path="/auth" 
+        element={
+        <Authentication />} 
+        />}
+      
+        {user.role === 'admin' ? <Route path="/view-courses" 
+      element={
+      <Layout>
+        <ViewCourses />
         </Layout>} /> 
         : <Route path="/auth" 
         element={

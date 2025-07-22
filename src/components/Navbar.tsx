@@ -2,6 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
 import { logout } from '../store/slices/authSlice';
+import { Link } from 'react-router-dom';
+import { Home } from 'lucide-react';
+
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,9 +42,17 @@ const Navbar: React.FC = () => {
                 const target = e.target as HTMLImageElement;
                 target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 10v6M2 10l10-5 10 5-10 5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E";
               }}
-            />
+            /> 
             <span className="text-xl font-bold text-gray-900">TeachHub</span>
           </div>
+          {user && user.role === "admin" ? <Link to="/admin-dashboard">
+          <div className='text-black'><p className='text-gray-700 flex gap-1 hover:text-black'><Home/>Dashboard</p></div>
+          </Link> : user &&  user.role === "student" ? <Link to="/student-dashboard">
+          <div className='text-black'><p className='text-gray-700 flex gap-1 hover:text-black'><Home/>Dashboard</p></div>
+          </Link> : user &&  user.role === "teacher" ? <Link to="/teacher-dashboard">
+          <div className='text-black'><p className='text-gray-700 flex gap-1 hover:text-black'><Home/>Dashboard</p></div>
+          </Link> : user &&  user.role === null ? <div> Role Required</div> : <p className='bold underline'>Login/Signup</p>}
+          
 
           {/* User Info */}
           <div className="flex items-center space-x-4">
