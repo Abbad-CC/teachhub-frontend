@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
           <div className='text-black'><p className='text-gray-700 flex gap-1 hover:text-black'><Home/>Dashboard</p></div>
           </Link> : user &&  user.role === "teacher" ? <Link to="/teacher-dashboard">
           <div className='text-black'><p className='text-gray-700 flex gap-1 hover:text-black'><Home/>Dashboard</p></div>
-          </Link> : user &&  user.role === null ? <div> Role Required</div> : <p className='bold underline'>Login/Signup</p>}
+          </Link> : user &&  user.role === null ? <div> Role Required</div> : <Link to="/auth"><p className='bold underline'>Login/Signup</p></Link>}
           
 
           {/* User Info */}
