@@ -2,7 +2,7 @@ import  { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 
 const AvailableCourseDetail = () => {
   const { state } = useLocation();

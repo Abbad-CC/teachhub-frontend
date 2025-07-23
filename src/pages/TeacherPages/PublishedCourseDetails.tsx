@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 import {  Edit } from 'lucide-react';
 
 

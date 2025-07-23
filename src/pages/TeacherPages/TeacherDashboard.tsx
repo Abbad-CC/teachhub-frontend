@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Users } from 'lucide-react';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 
 interface Student {
   id: string;

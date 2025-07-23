@@ -168,7 +168,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 // import Navbar from '../components/Navbar';
 // import { API_BASE_URL } from '../store/sagas/authSagas';
 import { useNavigate } from 'react-router-dom';

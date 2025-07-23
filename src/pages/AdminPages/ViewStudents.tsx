@@ -2,21 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Users, Mail, Calendar, ToggleLeft, ToggleRight, ArrowLeft, BookOpen } from 'lucide-react';
-import type { RootState } from '../store';
+import { GraduationCap, Mail, Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
+import type { RootState } from '../../store';
 
-interface Teacher {
+interface Student {
   id: string;
   name: string;
   email: string;
   role: string;
   createdAt: string;
   isActive?: boolean;
-  coursesCount?: number;
 }
 
-const ViewTeachers: React.FC = () => {
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
+const ViewStudents: React.FC = () => {
+  const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [toggleLoading, setToggleLoading] = useState<string | null>(null);
 
@@ -24,14 +23,14 @@ const ViewTeachers: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTeachers();
+    fetchStudents();
   }, []);
 
-  const fetchTeachers = async () => {
+  const fetchStudents = async () => {
     setLoading(true);
     try {
       if (token) {
-        const response = await fetch('http://localhost:5000/api/admin/users/teachers', {
+        const response = await fetch('http://localhost:5000/api/admin/users/students', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -40,24 +39,24 @@ const ViewTeachers: React.FC = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setTeachers(data.teachers || []);
+          setStudents(data.students || []);
         } else {
-          toast.error('Failed to load teachers');
+          toast.error('Failed to load students');
         }
       }
     } catch (error) {
-      console.error('Error fetching teachers:', error);
-      toast.error('Failed to load teachers');
+      console.error('Error fetching students:', error);
+      toast.error('Failed to load students');
     } finally {
       setLoading(false);
     }
   };
 
-  const toggleTeacherStatus = async (teacherId: string, currentStatus: boolean) => {
-    setToggleLoading(teacherId);
+  const toggleStudentStatus = async (studentId: string, currentStatus: boolean) => {
+    setToggleLoading(studentId);
     try {
       // Assuming you have an endpoint to toggle user status
-      const response = await fetch(`http://localhost:5000/api/admin/teacher/${teacherId}/status`, {
+      const response = await fetch(`http://localhost:5000/api/admin/student/${studentId}/status`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -68,18 +67,18 @@ const ViewTeachers: React.FC = () => {
 
       if (response.ok) {
         // Update local state
-        setTeachers(prev => prev.map(teacher => 
-          teacher.id === teacherId 
-            ? { ...teacher, isActive: !currentStatus }
-            : teacher
+        setStudents(prev => prev.map(student => 
+          student.id === studentId 
+            ? { ...student, isActive: !currentStatus }
+            : student
         ));
-        toast.success(`Teacher ${!currentStatus ? 'activated' : 'deactivated'} successfully`);
+        toast.success(`Student ${!currentStatus ? 'activated' : 'deactivated'} successfully`);
       } else {
-        toast.error('Failed to update teacher status');
+        toast.error('Failed to update student status');
       }
     } catch (error) {
-      console.error('Error toggling teacher status:', error);
-      toast.error('Failed to update teacher status');
+      console.error('Error toggling student status:', error);
+      toast.error('Failed to update student status');
     } finally {
       setToggleLoading(null);
     }
@@ -100,7 +99,7 @@ const ViewTeachers: React.FC = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -112,47 +111,47 @@ const ViewTeachers: React.FC = () => {
         <div className="flex items-center">
           <button
             onClick={handleGoBack}
-            className="mr-4 p-2 text-gray-600 hover:text-green-600 transition-colors"
+            className="mr-4 p-2 text-gray-600 hover:text-blue-600 transition-colors"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              All Teachers
+              All Students
             </h1>
-            <p className="text-gray-600">Manage and monitor teacher accounts</p>
+            <p className="text-gray-600">Manage and monitor student accounts</p>
           </div>
         </div>
-        <div className="bg-green-100 px-4 py-2 rounded-lg">
-          <span className="text-green-800 font-semibold">
-            Total: {teachers.length} Teachers
+        <div className="bg-blue-100 px-4 py-2 rounded-lg">
+          <span className="text-blue-800 font-semibold">
+            Total: {students.length} Students
           </span>
         </div>
       </div>
 
-      {/* Teachers Grid */}
+      {/* Students Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {teachers.map((teacher) => (
+        {students.map((student) => (
           <div
-            key={teacher.id}
+            key={student.id}
             className="bg-white rounded-lg border border-gray-300 shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
           >
             <div className="p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
-                  <div className="bg-green-100 rounded-full p-3 mr-3">
-                    <Users className="h-6 w-6 text-green-600" />
+                  <div className="bg-blue-100 rounded-full p-3 mr-3">
+                    <GraduationCap className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                      {teacher.name}
+                      {student.name}
                     </h3>
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      teacher.isActive !== false 
+                      student.isActive !== false 
                         ? 'bg-green-100 text-green-800' 
                         : 'bg-red-100 text-red-800'
                     }`}>
-                      {teacher.isActive !== false ? 'Active' : 'Inactive'}
+                      {student.isActive !== false ? 'Active' : 'Inactive'}
                     </span>
                   </div>
                 </div>
@@ -161,40 +160,36 @@ const ViewTeachers: React.FC = () => {
               <div className="space-y-3 mb-4">
                 <div className="flex items-center text-sm text-gray-600">
                   <Mail className="h-4 w-4 mr-2" />
-                  <span className="truncate">{teacher.email}</span>
+                  <span className="truncate">{student.email}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <Calendar className="h-4 w-4 mr-2" />
-                  <span>Joined {formatDate(teacher.createdAt)}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  <span>{teacher.coursesCount || 0} courses created</span>
+                  <span>Joined {formatDate(student.createdAt)}</span>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-gray-200">
                 <button
-                  onClick={() => toggleTeacherStatus(teacher.id, teacher.isActive !== false)}
-                  disabled={toggleLoading === teacher.id}
+                  onClick={() => toggleStudentStatus(student.id, student.isActive !== false)}
+                  disabled={toggleLoading === student.id}
                   className={`w-full flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                    teacher.isActive !== false
+                    student.isActive !== false
                       ? 'bg-red-100 text-red-700 hover:bg-red-200'
                       : 'bg-green-100 text-green-700 hover:bg-green-200'
-                  } ${toggleLoading === teacher.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  } ${toggleLoading === student.id ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {toggleLoading === teacher.id ? (
+                  {toggleLoading === student.id ? (
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
                   ) : (
                     <>
-                      {teacher.isActive !== false ? (
+                      {student.isActive !== false ? (
                         <ToggleRight className="h-4 w-4 mr-2" />
                       ) : (
                         <ToggleLeft className="h-4 w-4 mr-2" />
                       )}
                     </>
                   )}
-                  {teacher.isActive !== false ? 'Deactivate' : 'Activate'}
+                  {student.isActive !== false ? 'Deactivate' : 'Activate'}
                 </button>
               </div>
             </div>
@@ -203,17 +198,17 @@ const ViewTeachers: React.FC = () => {
       </div>
 
       {/* Empty State */}
-      {teachers.length === 0 && (
+      {students.length === 0 && (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
-            <Users className="mx-auto h-12 w-12" />
+            <GraduationCap className="mx-auto h-12 w-12" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No teachers found</h3>
-          <p className="text-gray-500">There are currently no teachers registered on the platform.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No students found</h3>
+          <p className="text-gray-500">There are currently no students registered on the platform.</p>
         </div>
       )}
     </div>
   );
 };
 
-export default ViewTeachers;
+export default ViewStudents;

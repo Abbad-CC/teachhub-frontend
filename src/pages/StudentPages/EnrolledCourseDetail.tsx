@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 
 type Broadcast = {
     id: number;

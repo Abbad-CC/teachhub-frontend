@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import type { RootState } from '../store';
+import type { RootState } from '../../store';
 import { Upload, Link, ArrowLeft } from 'lucide-react';
 
 // interface Course {
