@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Mail, Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
 import type { RootState } from '../../store';
+import StudentDetailsCard from '../../components/AdminComponents/StudentDetailsCard';
 
 interface Student {
   id: string;
@@ -67,8 +68,8 @@ const ViewStudents: React.FC = () => {
 
       if (response.ok) {
         // Update local state
-        setStudents(prev => prev.map(student => 
-          student.id === studentId 
+        setStudents(prev => prev.map(student =>
+          student.id === studentId
             ? { ...student, isActive: !currentStatus }
             : student
         ));
@@ -132,68 +133,12 @@ const ViewStudents: React.FC = () => {
       {/* Students Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {students.map((student) => (
-          <div
+          <StudentDetailsCard
             key={student.id}
-            className="bg-white rounded-lg border border-gray-300 shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-          >
-            <div className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="bg-blue-100 rounded-full p-3 mr-3">
-                    <GraduationCap className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                      {student.name}
-                    </h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      student.isActive !== false 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {student.isActive !== false ? 'Active' : 'Inactive'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center text-sm text-gray-600">
-                  <Mail className="h-4 w-4 mr-2" />
-                  <span className="truncate">{student.email}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span>Joined {formatDate(student.createdAt)}</span>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-gray-200">
-                <button
-                  onClick={() => toggleStudentStatus(student.id, student.isActive !== false)}
-                  disabled={toggleLoading === student.id}
-                  className={`w-full flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                    student.isActive !== false
-                      ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                      : 'bg-green-100 text-green-700 hover:bg-green-200'
-                  } ${toggleLoading === student.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  {toggleLoading === student.id ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
-                  ) : (
-                    <>
-                      {student.isActive !== false ? (
-                        <ToggleRight className="h-4 w-4 mr-2" />
-                      ) : (
-                        <ToggleLeft className="h-4 w-4 mr-2" />
-                      )}
-                    </>
-                  )}
-                  {student.isActive !== false ? 'Deactivate' : 'Activate'}
-                </button>
-              </div>
-            </div>
-          </div>
+            student={student}
+            toggleStatus={toggleStudentStatus}
+            isLoading={toggleLoading === student.id}
+          />
         ))}
       </div>
 
