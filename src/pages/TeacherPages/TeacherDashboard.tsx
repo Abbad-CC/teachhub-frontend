@@ -7,6 +7,7 @@ import type { RootState } from '../../store';
 import MyCourseCard from '../../components/TeacherComponents/MyCourseCard';
 import PublishedCourses from '../../components/TeacherComponents/PublishedCourses';
 import TotalStudents from '../../components/TeacherComponents/TotalStudents';
+import WelcomeCard from '../../components/WelcomeCard';
 
 interface Student {
   id: string;
@@ -113,12 +114,7 @@ const TeacherDashboard: React.FC = () => {
     <div className="container mx-auto py-8">
       {/* Header */}
       <div className="mb-8 flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user?.name}!
-          </h1>
-          <p className="text-gray-600">Manage your courses and track your teaching progress</p>
-        </div>
+       <WelcomeCard name={user?.name} />
         <button
           onClick={handleAddCourse}
           className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
