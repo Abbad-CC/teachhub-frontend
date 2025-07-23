@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Users, Mail, Calendar, ToggleLeft, ToggleRight, ArrowLeft, BookOpen } from 'lucide-react';
+import { Users, ArrowLeft } from 'lucide-react';
 import type { RootState } from '../../store';
 import TeacherDetailsCard from '../../components/AdminComponents/TeacherDetailsCard';
 
@@ -86,13 +86,7 @@ const ViewTeachers: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+ 
 
   const handleGoBack = () => {
     navigate('/admin-dashboard');

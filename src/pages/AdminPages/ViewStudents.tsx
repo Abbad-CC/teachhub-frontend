@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Mail, Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
+import { GraduationCap,  ArrowLeft } from 'lucide-react';
 import type { RootState } from '../../store';
 import StudentDetailsCard from '../../components/AdminComponents/StudentDetailsCard';
 
@@ -83,14 +83,6 @@ const ViewStudents: React.FC = () => {
     } finally {
       setToggleLoading(null);
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
   };
 
   const handleGoBack = () => {

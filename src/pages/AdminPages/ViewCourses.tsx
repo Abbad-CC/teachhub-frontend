@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, User, Calendar, ToggleLeft, ToggleRight, ArrowLeft } from 'lucide-react';
+import { BookOpen,  ArrowLeft } from 'lucide-react';
 import type { RootState } from '../../store';
 import CourseDetailsCard from '../../components/AdminComponents/CourseDetialsCard';
 
@@ -95,17 +95,7 @@ const ViewCourses: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
-  const formatPrice = (price: number) => {
-    return `Rs ${price.toLocaleString()}`;
-  };
 
   const handleGoBack = () => {
     navigate('/admin-dashboard');
