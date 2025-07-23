@@ -23,13 +23,13 @@ import type {
 export const API_BASE_URL = 'http://localhost:5000/api';
 
 // API calls
-const loginAPI = (credentials: LoginCredentials): Promise<AxiosResponse<AuthResponse>> =>
+const loginAPI = (credentials: LoginCredentials)=>
   axios.post(`${API_BASE_URL}/auth/login`, credentials);
 
-const signupAPI = (credentials: SignupCredentials): Promise<AxiosResponse<AuthResponse>> =>
+const signupAPI = (credentials: SignupCredentials) =>
   axios.post(`${API_BASE_URL}/auth/signup`, credentials);
 
-const adminLoginAPI = (credentials: AdminLoginCredentials): Promise<AxiosResponse<AdminAuthResponse>> =>
+const adminLoginAPI = (credentials: AdminLoginCredentials) =>
   axios.post(`${API_BASE_URL}/admin/login`, credentials);
 
 // Saga functions

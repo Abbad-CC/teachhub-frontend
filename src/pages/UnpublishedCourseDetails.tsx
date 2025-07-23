@@ -40,6 +40,7 @@ const UnpublishedCourseDetails: React.FC = () => {
   const [isDeleted, setIsDeleted] = useState (false)
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
 
   const handlePublish = async () => {
@@ -99,6 +100,7 @@ const UnpublishedCourseDetails: React.FC = () => {
       toast.error('Error Deleting course');
     } finally {
       setDeleteLoading(false);
+       setShowConfirm(false);
     }
   };
 
@@ -107,6 +109,28 @@ const UnpublishedCourseDetails: React.FC = () => {
   return (
     <div className="md:flex lg:flex mx-auto max-w-6xl p-6 bg-white rounded shadow gap-6 sm:block relative">
       {/* Left Side */}
+          {showConfirm && (
+            <div className="fixed inset-0 w-screen h-screen bg-black/60  flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded shadow-md text-center w-11/12 max-w-md">
+                    <p className="text-lg mb-4">Are you sure you want to Delete this course?</p>
+                    <div className="flex justify-center gap-4">
+                        <button
+                            onClick={handleDeleteCourse}
+                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                        >
+                            Yes, Delete
+                        </button>
+                        <button
+                            onClick={() => setShowConfirm(false)}
+                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
       <div className="w-full">
         <div className='flex justify-between'>
           <h1 className="text-2xl mt-1.5 font-bold ">{course.title}</h1>
@@ -128,7 +152,7 @@ const UnpublishedCourseDetails: React.FC = () => {
               Edit Course
             </button>
              <button
-              onClick={handleDeleteCourse}
+              onClick={() => setShowConfirm(true)}
               className={`px-4 py-2  ${isDeleted ? "bg-gray-500 disabled: text-white": "bg-red-600 text-white hover:bg-red-700"} rounded  transition font-medium text-sm`}
             >
               {deleteLoading ? "Deleting..." : isDeleted ? "Redirecting..." : <Trash/>}
