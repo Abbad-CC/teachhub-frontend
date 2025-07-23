@@ -4,7 +4,7 @@ interface Props {
   name?: string;
 }
 
-const AdminWelcome: React.FC<Props> = ({ name }) => {
+const WelcomeCard: React.FC<Props> = ({ name }) => {
   return (
      <div className="mb-8">
         <div>
@@ -17,4 +17,4 @@ const AdminWelcome: React.FC<Props> = ({ name }) => {
   )
 }
 
-export default AdminWelcome
+export default WelcomeCard

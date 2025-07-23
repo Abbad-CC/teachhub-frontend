@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import type { RootState } from '../../store';
-import AdminWelcome from '../../components/AdminComponents/AdminWelcome';
 import TeachersCard from '../../components/AdminComponents/TeachersCard';
 import StudentsCard from '../../components/AdminComponents/StudentsCard';
 import CoursesCard from '../../components/AdminComponents/CoursesCard';
 import StatisticsSection from '../../components/AdminComponents/StatisticsSection';
+import WelcomeCard from '../../components/WelcomeCard';
 
 interface User {
   isActive: unknown;
@@ -114,7 +114,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="container mx-auto py-8">
       {/* Header */}
-     <AdminWelcome name={user?.name}/>
+     <WelcomeCard name={user?.name}/>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Side - Navigation Cards */}
