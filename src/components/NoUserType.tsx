@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import Layout from "./Layout"
 import { logout } from "../store/slices/authSlice";
 
 // src/pages/NoUserTypeFound.tsx
