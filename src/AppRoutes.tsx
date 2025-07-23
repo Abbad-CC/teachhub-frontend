@@ -173,7 +173,7 @@ const AppRoutes = () => {
       />}
 
       
-      <Route path="/no-usertype-found-dashboard" element={<NoUserTypeFound />} />
+      <Route path="*" element={<NoUserTypeFound />} />
     </Routes>
   )
 }
