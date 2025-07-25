@@ -9,7 +9,7 @@ import StatisticsSection from '../../components/AdminComponents/StatisticsSectio
 import WelcomeCard from '../../components/WelcomeCard';
 
 interface User {
-  isActive: unknown;
+  isActive: boolean;
   id: string;
   name: string;
   email: string;

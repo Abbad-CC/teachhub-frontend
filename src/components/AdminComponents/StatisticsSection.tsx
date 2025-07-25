@@ -2,7 +2,7 @@ import React from 'react';
 import { Users, BookOpen, GraduationCap } from 'lucide-react';
 
 interface User {
-  isActive: unknown;
+  isActive: boolean;
   id: string;
   name: string;
   email: string;

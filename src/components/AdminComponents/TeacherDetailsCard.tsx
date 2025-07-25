@@ -8,7 +8,7 @@ interface Teacher {
   role: string;
   createdAt: string;
   isActive: boolean;
-  coursesCount?: number;
+  
 }
 
 interface Props {
@@ -60,10 +60,10 @@ const TeacherDetailsCard: React.FC<Props> = ({ teacher, toggleStatus, isLoading 
             <Calendar className="h-4 w-4 mr-2" />
             <span>Joined {formatDate(teacher.createdAt)}</span>
           </div>
-          <div className="flex items-center text-sm text-gray-600">
+          {/* <div className="flex items-center text-sm text-gray-600">
             <BookOpen className="h-4 w-4 mr-2" />
             <span>{teacher.coursesCount || 0} courses created</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="pt-4 border-t border-gray-200">

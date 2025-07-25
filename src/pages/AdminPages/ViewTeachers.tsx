@@ -13,7 +13,7 @@ interface Teacher {
   role: string;
   createdAt: string;
   isActive: boolean;
-  coursesCount?: number;
+  
 }
 
 const ViewTeachers: React.FC = () => {
